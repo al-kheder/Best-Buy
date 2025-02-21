@@ -4,10 +4,18 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+    def set_quantity(self, quantity: int):
+        if quantity < 0:
+            raise ValueError("Quantity cannot be negative.")
+        self.quantity = quantity
+
     def buy(self, quantity: int) -> float:
         if quantity > self.quantity:
             raise ValueError(f"Not enough stock for {self.name}. Available: {self.quantity}")
-        self.quantity -= quantity
+
+        new_quantity = self.quantity - quantity
+        self.set_quantity(new_quantity)  # Using set_quantity to update stock
+
         return self.price * quantity
 
     def is_active(self) -> bool:
